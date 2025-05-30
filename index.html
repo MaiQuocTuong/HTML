@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Hiệu Ứng Tình Yêu</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: black;
+      height: 100vh;
+      cursor: none;
+    }
+
+    #scene {
+      perspective: 800px;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+    }
+
+    .love-text {
+      position: absolute;
+      top: -50px;
+      color: #ff66cc;
+      font-size: 2rem;
+      font-weight: bold;
+      font-family: 'Segoe UI', sans-serif;
+      text-shadow: 0 0 5px #ff66cc, 0 0 10px #ff99cc, 0 0 15px #ff66cc;
+      animation: fall linear forwards;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-50px);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="scene">
+    <div id="container"></div>
+  </div>
+
+  <script>
+    const container = document.getElementById('container');
+
+    const loveQuotes = [
+      'Anh yêu em 💖',
+      'Em là cả thế giới của anh 🌎',
+      'Yêu em từ cái nhìn đầu tiên ✨',
+      'Mãi bên em nhé 💑',
+      'Trái tim anh chỉ có em ❤️',
+      'Mỗi ngày có em là một phép màu 🌈',
+      'Chỉ cần em cười, anh đã hạnh phúc 😊',
+      'Yêu em hơn hôm qua và ít hơn ngày mai 💕',
+      'Em là giấc mơ ngọt ngào nhất 💤',
+      'Tình yêu này là mãi mãi 🔒'
+    ];
+
+    function getRandomQuote() {
+      return loveQuotes[Math.floor(Math.random() * loveQuotes.length)];
+    }
+
+    function createFallingText() {
+      const text = document.createElement('div');
+      text.classList.add('love-text');
+      text.innerText = getRandomQuote();
+
+      const size = Math.random() * 10 + 20;
+      text.style.fontSize = `${size}px`;
+      text.style.left = `${Math.random() * window.innerWidth}px`;
+      text.style.animationDuration = `${Math.random() * 2 + 4}s`;
+
+      container.appendChild(text);
+
+      setTimeout(() => {
+        text.remove();
+      }, 7000);
+    }
+
+    setInterval(createFallingText, 300);
+
+    // Hiệu ứng xoay nhẹ theo chuột
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 10;
+      const y = (e.clientY / window.innerHeight - 0.5) * -10;
+      container.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`;
+    });
+  </script>
+</body>
+</html>
